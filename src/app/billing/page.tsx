@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -182,23 +181,6 @@ export default function BillingPage() {
       invoice.case.toLowerCase().includes(searchTerm.toLowerCase()) ||
       invoice.id.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const getStatusColor = (status: InvoiceStatus): string => {
-    switch (status) {
-      case "paid":
-        return "bg-green-100 text-green-800 border-green-200";
-      case "sent":
-        return "bg-blue-100 text-blue-800 border-blue-200";
-      case "pending-approval":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200";
-      case "overdue":
-        return "bg-red-100 text-red-800 border-red-200";
-      case "draft":
-        return "bg-gray-100 text-gray-800 border-gray-200";
-      default:
-        return "bg-gray-100 text-gray-800 border-gray-200";
-    }
-  };
 
   const totalRevenue = invoices.filter(inv => inv.status === "paid").reduce((sum, inv) => sum + inv.amount, 0);
   const pendingAmount = invoices.filter(inv => inv.status === "pending-approval" || inv.status === "sent").reduce((sum, inv) => sum + inv.amount, 0);
