@@ -511,30 +511,34 @@ export default function NewCalendarPage() {
         <CardContent>
           <div className="space-y-4">
             {[...appointments, ...deadlines].map((event, index) => {
-              const daysUntil = Math.ceil((new Date(event.date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-              return (
-                <div key={index} className="flex justify-between items-center p-4 border border-border rounded-lg">
-                  <div className="flex items-center gap-4">
-                    <div className="flex-shrink-0">
-                      <Badge className={'status' in event ? getStatusColor(event.status) : getPriorityColor((event as Deadline).priority)}>
-                        {'status' in event ? event.status : (event as Deadline).priority}
-                      </Badge>
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <Link href={`/cases/${event.caseId}`} className="font-medium text-foreground hover:underline">
-                          {event.title}
-                        </Link>
-                        {'type' in event && (
-                          <Badge className={getTypeColor(event.type)} variant="outline">
-                            {event.type}
-                          </Badge>
-                        )}
-                      </div>
-<p className="text-sm text-muted-foreground">{`client` in event ? event.client : event.case} - {event.date}</p>
-                </div>
-              );
-            })}
+  const daysUntil = Math.ceil((new Date(event.date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+  return (
+    <div key={index} className="flex justify-between items-center p-4 border border-border rounded-lg">
+      <div className="flex items-center gap-4">
+        <div className="flex-shrink-0">
+          <Badge className={'status' in event ? getStatusColor(event.status) : getPriorityColor((event as Deadline).priority)}>
+            {'status' in event ? event.status : (event as Deadline).priority}
+          </Badge>
+        </div>
+        <div>
+          <div className="flex items-center gap-2">
+            <Link href={`/cases/${event.caseId}`} className="font-medium text-foreground hover:underline">
+              {event.title}
+            </Link>
+            {'type' in event && (
+              <Badge className={getTypeColor(event.type)} variant="outline">
+                {event.type}
+              </Badge>
+            )}
+          </div>
+          <p className="text-sm text-muted-foreground">
+            {`client` in event ? event.client : event.case} - {event.date}
+          </p>
+        </div>  
+      </div>    
+    </div>      
+  );
+})}
           </div>
         </CardContent>
       </Card>

@@ -134,21 +134,6 @@ export default function TaskDetailPage() {
     }
   };
 
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case "Court Hearing":
-        return "bg-purple-100 text-purple-800";
-      case "Consultation":
-        return "bg-blue-100 text-blue-800";
-      case "Meeting":
-        return "bg-green-100 text-green-800";
-      case "Deposition":
-        return "bg-orange-100 text-orange-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
   return (
     <div className="max-w-4xl mx-auto py-6">
       <div className="mb-6">

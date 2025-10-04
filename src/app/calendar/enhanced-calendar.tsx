@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 
 export default function EnhancedCalendarPage() {
@@ -178,19 +177,6 @@ export default function EnhancedCalendarPage() {
     }
   };
 
-  const getUrgencyColor = (urgency: string) => {
-    switch (urgency) {
-      case "High":
-        return "bg-red-500 text-white";
-      case "Medium":
-        return "bg-orange-500 text-white";
-      case "Low":
-        return "bg-green-500 text-white";
-      default:
-        return "bg-gray-500 text-white";
-    }
-  };
-
   const getTypeColor = (type: string) => {
     switch (type) {
       case "Court Hearing":
@@ -348,10 +334,6 @@ export default function EnhancedCalendarPage() {
   // Week view component
   const WeekView = () => {
     const weekDays = generateWeekDays();
-    const weekEvents = weekDays.map(day => ({
-      date: day,
-      events: getEventsForDate(day)
-    }));
 
     return (
       <Card>
@@ -579,7 +561,7 @@ export default function EnhancedCalendarPage() {
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Today's Schedule</CardTitle>
+                <CardTitle>Today&apos;s Schedule</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -598,7 +580,7 @@ export default function EnhancedCalendarPage() {
                         <p className="text-xs text-muted-foreground">{appointment.location}</p>
                       </div>
                     ))}
-                  {appointments.filter(apt => apt.date === new Date().toISOString().split('T')[0]).length === 0 && (
+                  {appointments.filter(apt => apt.date === new Date().toISOString().split("T")[0]).length === 0 && (
                     <p className="text-sm text-muted-foreground">No appointments today</p>
                   )}
                 </div>

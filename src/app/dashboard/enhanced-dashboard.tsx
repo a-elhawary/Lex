@@ -160,7 +160,7 @@ export default function EnhancedDashboardPage() {
         <div>
           <h1 className="text-4xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-lg text-gray-600 mt-2">
-            Welcome back! Here's your practice overview for today.
+            Welcome back! Here&apos;s your practice overview for today.
           </p>
         </div>
         <div className="flex gap-3 mt-4 sm:mt-0">

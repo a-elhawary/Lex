@@ -12,7 +12,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Mindmap from "@/components/Mindmap";
 import { TimeEntry } from "@/types/billing";
@@ -36,8 +35,8 @@ export default function CaseDetailPage() {
   const router = useRouter();
   const caseId = params.caseId as string;
   const [newNote, setNewNote] = useState("");
-  const [showFeeDialog, setShowFeeDialog] = useState(false);
-  const [fees, setFees] = useState([
+  const [, setShowFeeDialog] = useState(false);
+  const [fees, ] = useState([
     {
       id: "1",
       type: "court",
@@ -66,15 +65,6 @@ export default function CaseDetailPage() {
       invoiceId: null
     }
   ]);
-
-  const [newFee, setNewFee] = useState({
-    type: "court",
-    description: "",
-    amount: 0,
-    date: new Date().toISOString().split('T')[0],
-    billable: true,
-    notes: ""
-  });
 
   const [timelineView, setTimelineView] = useState<'list' | 'mindmap'>('list');
   const [commentingOn, setCommentingOn] = useState<string | null>(null);
@@ -164,7 +154,7 @@ export default function CaseDetailPage() {
     }
   });
 
-  const [lawsAndPrecedents, setLawsAndPrecedents] = useState([
+  const [lawsAndPrecedents,] = useState([
     {
       id: '1',
       title: 'California Vehicle Code § 22350',
@@ -793,7 +783,7 @@ export default function CaseDetailPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
-                <CardTitle>Claimant's Talking Points and Evidence</CardTitle>
+                <CardTitle>Claimant&apos;s Talking Points and Evidence</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {litigationStrategy.claimant.talkingPoints.map(point => (
@@ -848,7 +838,7 @@ export default function CaseDetailPage() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Defendant's Talking Points and Evidence</CardTitle>
+                <CardTitle>Defendant&apos;s Talking Points and Evidence</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {litigationStrategy.defendant.talkingPoints.map(point => (

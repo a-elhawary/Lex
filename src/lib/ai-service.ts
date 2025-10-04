@@ -1,7 +1,6 @@
 import { Case, Client, Appointment, Invoice } from '@/types/billing';
 
 const OPENROUTER_API_KEY = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
-const REPLICATE_API_TOKEN = process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN;
 
 interface AIInsight {
   type: 'prediction' | 'recommendation' | 'alert' | 'summary';
