@@ -7,6 +7,32 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
+type Appointment = {
+  id: string;
+  title: string;
+  client: string;
+  date: string;          // ← common
+  time: string;
+  duration: string;
+  type: "Consultation" | "Court Hearing" | "Meeting" | "Deposition" | string;
+  location: string;
+  status: "Confirmed" | "Pending" | "Cancelled" | string;
+  caseId: string;
+};
+
+type Deadline = {
+  id: string;
+  title: string;
+  case: string;
+  caseId: string;
+  date: string;          // ← common
+  priority: "High" | "Medium" | "Low" | string;
+  status: "Pending" | "In Progress" | "Urgent" | string;
+  description: string;
+};
+
+type EventItem = Appointment | Deadline;
+
 export default function EnhancedCalendarPage() {
   const searchParams = useSearchParams();
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -21,7 +47,7 @@ export default function EnhancedCalendarPage() {
     }
   }, [searchParams]);
 
-  const appointments = [
+  const appointments:Appointment[] = [
     {
       id: "1",
       title: "Client Consultation - Johnson",
@@ -108,7 +134,7 @@ export default function EnhancedCalendarPage() {
     },
   ];
 
-  const deadlines = [
+  const deadlines: Deadline[] = [
     {
       id: "1",
       title: "File Motion to Dismiss",
@@ -322,12 +348,13 @@ export default function EnhancedCalendarPage() {
   };
 
   // Filter upcoming events
-  const upcomingEvents = [...appointments, ...deadlines].filter(event => {
-    const eventDate = new Date('date' in event ? event.date : event.date);
+  const allEvents : EventItem[] = [...appointments, ...deadlines];
+  const upcomingEvents = allEvents.filter(event=> {
+    const eventDate = new Date('date' in event ? event.date : "");
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return eventDate >= today;
-  }).sort((a, b) => new Date('date' in a ? a.date : a.date).getTime() - new Date('date' in b ? b.date : b.date).getTime());
+  }).sort((a, b) => new Date('date' in a ? a.date : "").getTime() - new Date('date' in b ? b.date : b.date).getTime());
 
   const filteredEvents = filter === "upcoming" ? upcomingEvents : [...appointments, ...deadlines];
 
@@ -415,7 +442,7 @@ export default function EnhancedCalendarPage() {
                   </div>
                   <div>
                     <Badge className={'status' in event ? getStatusColor(event.status) : getPriorityColor(event.priority)}>
-                      {'status' in event ? event.status : event.priority}
+                      {'status' in event ? event.status : ""}
                     </Badge>
                   </div>
                 </div>
@@ -636,18 +663,18 @@ export default function EnhancedCalendarPage() {
         <CardContent>
           <div className="space-y-4">
             {filteredEvents.map((event, index) => {
-              const daysUntil = Math.ceil((new Date('date' in event ? event.date : event.date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+              const daysUntil = Math.ceil((new Date('date' in event ? event.date : "").getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
               return (
                 <div key={index} className="flex justify-between items-center p-4 border border-border rounded-lg">
                   <div className="flex items-center gap-4">
                     <div className="flex-shrink-0">
-                      <Badge className={'status' in event ? getStatusColor(event.status) : getPriorityColor(event.priority)}>
-                        {'status' in event ? event.status : event.priority}
+                      <Badge className={'status' in event ? getStatusColor(event.status) : ""}>
+                        {'status' in event ? event.status : ""}
                       </Badge>
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <Link href={`/cases/${'caseId' in event ? event.caseId : event.caseId}`} className="font-medium text-foreground hover:underline">
+                        <Link href={`/cases/${'caseId' in event ? event.caseId : ""}`} className="font-medium text-foreground hover:underline">
                           {event.title}
                         </Link>
                         {'type' in event && (
@@ -662,12 +689,12 @@ export default function EnhancedCalendarPage() {
                         {daysUntil >= 0 && ` • ${daysUntil} days away`}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {'location' in event ? event.location : 'Deadline'} • {'duration' in event ? event.duration : event.description}
+                        {'location' in event ? event.location : 'Deadline'} • {'duration' in event ? event.duration : ""}
                       </p>
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <Link href={`/cases/${'caseId' in event ? event.caseId : event.caseId}`}>
+                    <Link href={`/cases/${'caseId' in event ? event.caseId : ""}`}>
                       <Button variant="outline" size="sm">View Case</Button>
                     </Link>
                     {'caseId' in event && (
