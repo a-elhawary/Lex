@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -33,7 +33,6 @@ interface Deadline {
 }
 
 export default function NewCalendarPage() {
-  const searchParams = useSearchParams();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<"month" | "week" | "day">("month");
 
@@ -227,20 +226,9 @@ export default function NewCalendarPage() {
     return day === 0 || day === 6;
   };
 
-  const upcomingEvents = [...appointments, ...deadlines].filter(event => {
-    const eventDate = new Date(event.date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return eventDate >= today;
-  }).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
   // Week view component
   const WeekView = () => {
     const weekDays = generateWeekDays();
-    const weekEvents = weekDays.map(day => ({
-      date: day,
-      events: getEventsForDate(day)
-    }));
 
     return (
       <Card>
@@ -511,7 +499,6 @@ export default function NewCalendarPage() {
         <CardContent>
           <div className="space-y-4">
             {[...appointments, ...deadlines].map((event, index) => {
-  const daysUntil = Math.ceil((new Date(event.date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
   return (
     <div key={index} className="flex justify-between items-center p-4 border border-border rounded-lg">
       <div className="flex items-center gap-4">
