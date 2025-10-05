@@ -249,7 +249,6 @@ export default function DocumentsPage() {
                   <Card key={template.id} className="hover:shadow-md transition-shadow">
                     <CardHeader>
                       <CardTitle className="text-base">{template.name}</CardTitle>
-                      <Badge variant="secondary">{template.category}</Badge>
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-muted-foreground mb-3">{template.description}</p>
