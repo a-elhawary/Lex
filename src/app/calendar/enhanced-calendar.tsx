@@ -354,7 +354,7 @@ export default function EnhancedCalendarPage() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return eventDate >= today;
-  }).sort((a, b) => new Date('date' in a ? a.date : "").getTime() - new Date('date' in b ? b.date : b.date).getTime());
+  }).sort((a, b) => new Date('date' in a ? a.date : "").getTime() - new Date('date' in b ? b.date : "").getTime());
 
   const filteredEvents = filter === "upcoming" ? upcomingEvents : [...appointments, ...deadlines];
 
@@ -441,7 +441,7 @@ export default function EnhancedCalendarPage() {
                     </div>
                   </div>
                   <div>
-                    <Badge className={'status' in event ? getStatusColor(event.status) : getPriorityColor(event.priority)}>
+                    <Badge className={'status' in event ? getStatusColor(event.status) : ""}>
                       {'status' in event ? event.status : ""}
                     </Badge>
                   </div>
@@ -684,7 +684,7 @@ export default function EnhancedCalendarPage() {
                         )}
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        {'client' in event ? event.client : event.case} • {'date' in event ? event.date : event.date}
+                        {'client' in event ? event.client : event.case} • {'date' in event ? event.date : ""}
                         {'time' in event && ` at ${event.time}`}
                         {daysUntil >= 0 && ` • ${daysUntil} days away`}
                       </p>
