@@ -1,4 +1,4 @@
-import { Case, Client, Appointment, Invoice } from '@/types/billing';
+import { Invoice } from '@/types/billing';
 
 const OPENROUTER_API_KEY = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
 
@@ -49,7 +49,7 @@ export class AIService {
     return response.json();
   }
 
-  static async generateCaseInsights(cases: Case[]): Promise<CasePrediction[]> {
+  static async generateCaseInsights(cases: any[]): Promise<CasePrediction[]> {
     const caseData = cases.map(c => ({
       id: c.id,
       type: c.type,
@@ -83,8 +83,8 @@ export class AIService {
   }
 
   static async generateWorkloadInsights(
-    cases: Case[],
-    appointments: Appointment[],
+    cases: any[],
+    appointments: any[],
     lawyers: any[]
   ): Promise<WorkloadInsight> {
     const workloadData = {
@@ -113,7 +113,7 @@ export class AIService {
   }
 
   static async generateRevenueForecast(
-    cases: Case[],
+    cases: any[],
     invoices: Invoice[]
   ): Promise<{
     nextMonth: number;
@@ -127,7 +127,7 @@ export class AIService {
         probability: c.successProbability || 0.8,
         expectedCloseDate: c.expectedCloseDate
       })),
-      outstandingInvoices: invoices.filter(i => i.status === 'pending').reduce((sum, i) => sum + i.amount, 0)
+      outstandingInvoices: invoices.reduce((sum, i) => sum + i.amount, 0)
     };
 
     const messages = [
@@ -146,9 +146,9 @@ export class AIService {
   }
 
   static async getDailyInsights(
-    cases: Case[],
-    clients: Client[],
-    appointments: Appointment[]
+    cases: any[],
+    clients: any[],
+    appointments: any[]
   ): Promise<AIInsight[]> {
     const dailyData = {
       newCases: cases.filter(c => {

@@ -310,7 +310,7 @@ export default function UpdatedCalendarPage() {
                     </div>
                   </div>
                   <div>
-                    <Badge className={'status' in event ? getStatusColor(event.status) : getPriorityColor(event.priority)}>
+                    <Badge className={'status' in event ? getStatusColor(event.status) : ""}>
                       {'status' in event ? event.status : ""}
                     </Badge>
                   </div>
